@@ -52,7 +52,7 @@ let weather = {
       document.querySelector(".wind").innerText = "Wind speed: " +speed + " km/h";
       //document.querySelector(".weather").classList.remove("loading");
       document.body.style.backgroundImage =
-        "url('https://source.unsplash.com/1920x1080/?" + name + "')";
+        "url('https://source.unsplash.com/1920x1080/?city')";
       center = {lat: data.coord.lat, lng: data.coord.lon};
     },
 
@@ -66,6 +66,7 @@ let weather = {
 }
 
 const toggle = document.querySelector("#toggle");
+toggle.checked = false
 let makeMarkers;
 toggle.addEventListener("change", () => {
   if (toggle.checked){
@@ -77,17 +78,28 @@ toggle.addEventListener("change", () => {
 
 weather.fetchWeather(startlok);
 
-markers = []
-
 function initMap(){
 
   let config = {
-    zoom: 8,
+    zoom: 13,
     center: {lat: 52.2230334, lng: 18.2510729}
   }
 
   let map = new google.maps.Map(document.getElementById('map'), config);
   
+  let nmar = Object.keys(markers).length
+  for (let i = 0; i < nmar; i++) {
+    console.log(markers[i])
+    let p = {
+      coords: {
+        lat: parseFloat(markers[i].lat),
+        lng: parseFloat(markers[i].lng)
+      },
+      title: markers[i].description
+    }
+    addMarker(p)
+  }
+
   let mrkr;
   google.maps.event.addListener(map, 'click', function(event){
     weather.searchCoords(JSON.stringify(event.latLng.toJSON(), null, 2))
@@ -99,6 +111,12 @@ function initMap(){
         makeMarkers = false
       }
       document.querySelector("#fcont").style.display = "flex"
+      document.querySelector("#fcont").style.justifyContent  = "center"
+      //console.log(event.latLng.toJSON())
+      document.querySelector("#lat").value = event.latLng.toJSON().lat
+      document.querySelector("#lat").value = parseFloat(document.querySelector("#lat").value)
+      document.querySelector("#lng").value = event.latLng.toJSON().lng
+      document.querySelector("#lng").value = parseFloat(document.querySelector("#lng").value)
       //addMarker({coords:event.latLng})
     }
   })
@@ -106,6 +124,7 @@ function initMap(){
   function addMarker(props){
     let marker = new google.maps.Marker({
       position: props.coords,
+      title: props.title,
       map: map
     })
   }

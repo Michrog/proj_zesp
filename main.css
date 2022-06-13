@@ -5,8 +5,8 @@ body {
     height: 100vh;
     margin: 0;
     font-family: 'Lato', sans-serif;
-    background: #222;
-    background-image: url('https://source.unsplash.com/1920x1080/?nature,landscape');
+    background-color: #555;
+    /*background-image: url('https://source.unsplash.com/1920x1080/?nature,landscape');*/
     font-size: 3vh;
   }
   
@@ -26,11 +26,11 @@ body {
     justify-content: center;
   }
   
-
+  
  
   button{
-    height: 1em;
-    width: 1em;
+    height: 3em;
+    width: 3em;
     border-radius: 50%;
     margin: 0.5em;
     border: none;
@@ -92,11 +92,16 @@ button:hover {
     margin: 2vh 0;
   }
 
-  .marker-form form{
+  form {
     display: flex;
     flex-direction: column;
-    vertical-align: middle;
-    height: 100%;
+    width: 100%;
+    font-size: 0.7em;
+  }
+
+  .marker-form{
+    margin: 0px;
+    width:50%;
   }
 
   .vcontainer {
